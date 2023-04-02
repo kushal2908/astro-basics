@@ -1,0 +1,26 @@
+---
+import Layout from "../components/Layout.astro";
+const res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=10s");
+const data = await res.json();
+---
+
+<Layout>
+  <div class="container">
+    <h2>Blog</h2>
+    <div class="row">
+      {
+        data.map((d) => (
+          <>
+            <a class="col-sm-12 col-md-4 mb-3" href={`/posts/${d?.id}`}>
+              <div class="card" style="min-height: 120px!important;">
+                <div class="card-body">
+                  <h5>{d.title}</h5>
+                </div>
+              </div>
+            </a>
+          </>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

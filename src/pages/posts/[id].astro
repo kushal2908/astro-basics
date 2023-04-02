@@ -1,0 +1,23 @@
+---
+import Layout from "../../components/Layout.astro";
+
+export async function getStaticPaths() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=10");
+  const data = await res.json();
+  return data?.map((d) => ({ params: { id: d?.id } }));
+}
+const { id } = Astro.params;
+
+const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+const blogdata = await res.json();
+---
+
+<Layout>
+  <div class="container">
+    <h2 class="mt-2 fw-bold mb-0">{blogdata?.title}</h2>
+    <p class="mb-2 fw-bold text-muted">By: {blogdata?.userId}</p>
+    <p>
+      {blogdata?.body}
+    </p>
+  </div>
+</Layout>
